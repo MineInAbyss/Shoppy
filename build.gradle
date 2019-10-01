@@ -1,0 +1,50 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '5.0.0'
+}
+
+apply plugin: 'java'
+
+group = pluginGroup
+version = pluginVersion
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'papermc-repo'
+        url = 'https://papermc.io/repo/repository/maven-public/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven { url 'https://erethon.de/repo/' } //HeadLib
+    maven { url 'https://jitpack.io' } //JitPack
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compileOnly 'de.erethon:headlib:3.0.1'
+    compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
+    implementation 'com.github.Mineinabyss:guiy:master-SNAPSHOT'
+}
+
+shadowJar {
+    baseName = "Mobzy"
+    classifier = null
+    dependencies {
+        include(dependency('com.github.Mineinabyss:guiy:master-SNAPSHOT'))
+        include(dependency('de.erethon:headlib:3.0.1'))
+        include(dependency('com.github.WesJD.AnvilGUI:anvilgui:5e3ab1f721'))
+    }
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
