@@ -15,7 +15,7 @@ public class CreateShopGUI extends GuiHolder {
     private ClickableElement back;
 
     public CreateShopGUI(Player player, Shoppy plugin) {
-        super(6, "Mine In Abyss - Stats", plugin);
+        super(6, "Create Shop", plugin);
         this.plugin = plugin;
         this.player = player;
 

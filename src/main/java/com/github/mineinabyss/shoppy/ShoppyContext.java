@@ -1,5 +1,6 @@
 package com.github.mineinabyss.shoppy;
 
+import com.github.mineinabyss.shoppy.configuration.ShopDataConfigManager;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.Plugin;
 
@@ -9,13 +10,21 @@ import java.util.logging.Logger;
  * Stores context for the plugin, such as the plugin instance
  */
 public class ShoppyContext {
-    //    private Map<UUID, PlayerData> playerDataMap = new HashMap<>();
     private Plugin plugin;
     private Logger logger;
     private Configuration config;
+    private ShopDataConfigManager shopData;
 
     public ShoppyContext(Configuration config) {
         this.config = config;
+    }
+
+    public ShopDataConfigManager getShopData() {
+        return shopData;
+    }
+
+    public void setShopData(ShopDataConfigManager shopData) {
+        this.shopData = shopData;
     }
 
     public Plugin getPlugin() {
@@ -25,14 +34,6 @@ public class ShoppyContext {
     public void setPlugin(Plugin plugin) {
         this.plugin = plugin;
     }
-
-//    public Map<UUID, PlayerData> getPlayerDataMap() {
-//        return playerDataMap;
-//    }
-
-//    public PlayerData getPlayerData(Player player){
-//        return getPlayerDataMap().get(player.getUniqueId());
-//    }
 
     public Logger getLogger() {
         return logger;
@@ -46,10 +47,4 @@ public class ShoppyContext {
         return config;
     }
 
-//    public AbyssWorldManager getWorldManager() {
-//        return worldManager;
-//    }
-//    public WorldManager getRealWorldManager() {
-//        return realWorldManager;
-//    }
 }
