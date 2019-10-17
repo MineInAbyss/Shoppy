@@ -1,13 +1,13 @@
 package com.github.mineinabyss.shoppy.shops;
 
 import com.github.mineinabyss.shoppy.configuration.ShopDataConfigManager;
+import com.github.mineinabyss.shoppy.gui.ShopGUI;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
+import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @SerializableAs("ShoppyShop")
 public class Shop implements ConfigurationSerializable {
@@ -19,13 +19,14 @@ public class Shop implements ConfigurationSerializable {
     }
 
     public static Shop deserialize(Map<String, Object> args) {
-        Shop shop = new Shop((UUID) args.get(ShopDataConfigManager.UUID_KEY));
+        Bukkit.broadcastMessage("deserialize");
+        Shop shop = new Shop(UUID.fromString((String) args.get(ShopDataConfigManager.UUID_KEY)));
         shop.setTrades((List<Trade>) args.get("trades"));
         return shop;
     }
 
-    public void showGui(){
-
+    public void showGui(Player player){
+        new ShopGUI(player, this).show(player);
     }
 
     public UUID getUuid() {
@@ -46,6 +47,10 @@ public class Shop implements ConfigurationSerializable {
 
     @Override
     public Map<String, Object> serialize() {
-        return null;
+        Map<String, Object> args = new HashMap<>();
+        args.put("==", "ShoppyShop");
+        args.put(ShopDataConfigManager.UUID_KEY, getUuid().toString());
+        args.put("trades", getTrades());
+        return args;
     }
 }

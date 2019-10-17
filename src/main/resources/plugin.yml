@@ -1,10 +1,11 @@
 name: Shoppy
 version: @version@
 main: com.github.mineinabyss.shoppy.Shoppy
-api-version: 1.13
+api-version: '1.13'
 depend: [MineInAbyss]
 authors: [Offz]
 description: A shop plugin intended for the MineInAbyss server
 
-shoppy:
-  description: The general shop command
+commands:
+  shoppy:
+    description: The general shop command

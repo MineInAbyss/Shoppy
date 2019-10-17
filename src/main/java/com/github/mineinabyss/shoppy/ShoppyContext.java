@@ -1,9 +1,12 @@
 package com.github.mineinabyss.shoppy;
 
 import com.github.mineinabyss.shoppy.configuration.ShopDataConfigManager;
+import com.github.mineinabyss.shoppy.shops.Shop;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.Plugin;
 
+import java.io.IOException;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 /**
@@ -15,7 +18,7 @@ public class ShoppyContext {
     private Configuration config;
     private ShopDataConfigManager shopData;
 
-    public ShoppyContext(Configuration config) {
+    ShoppyContext(Configuration config) {
         this.config = config;
     }
 
@@ -23,7 +26,7 @@ public class ShoppyContext {
         return shopData;
     }
 
-    public void setShopData(ShopDataConfigManager shopData) {
+    void setShopData(ShopDataConfigManager shopData) {
         this.shopData = shopData;
     }
 
@@ -31,7 +34,7 @@ public class ShoppyContext {
         return plugin;
     }
 
-    public void setPlugin(Plugin plugin) {
+    void setPlugin(Plugin plugin) {
         this.plugin = plugin;
     }
 
@@ -39,12 +42,20 @@ public class ShoppyContext {
         return logger;
     }
 
-    public void setLogger(Logger logger) {
+    void setLogger(Logger logger) {
         this.logger = logger;
     }
 
     public Configuration getConfig() {
         return config;
+    }
+
+    public void addShop(Shop shop){
+        shopData.addShop(shop);
+    }
+
+    public Shop getShop(UUID uuid){
+        return shopData.getShop(uuid);
     }
 
 }

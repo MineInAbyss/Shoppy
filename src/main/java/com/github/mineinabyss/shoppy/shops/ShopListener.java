@@ -1,6 +1,7 @@
 package com.github.mineinabyss.shoppy.shops;
 
 import com.github.mineinabyss.shoppy.ShoppyContext;
+import com.github.mineinabyss.shoppy.gui.ShopGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
@@ -18,11 +19,13 @@ public class ShopListener implements Listener {
     public void onRightClickShopKeeper(PlayerInteractEntityEvent e) {
         Entity entity = e.getRightClicked();
         if (entity.getScoreboardTags().contains("shoppy")) {
-            Shop shop = context.getShopData().getShop(e.getRightClicked().getUniqueId());
-            if(shop == null)
+            Shop shop = context.getShop(e.getRightClicked().getUniqueId());
+            if (shop == null)
                 Bukkit.broadcastMessage("Failed to get shop!");
-            else
-                Bukkit.broadcastMessage(shop.toString());
+            else {
+                e.setCancelled(true);
+                shop.showGui(e.getPlayer());
+            }
         }
     }
 }

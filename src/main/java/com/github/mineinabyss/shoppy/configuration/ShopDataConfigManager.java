@@ -4,6 +4,9 @@ import com.github.mineinabyss.shoppy.Shoppy;
 import com.github.mineinabyss.shoppy.ShoppyContext;
 import com.github.mineinabyss.shoppy.shops.Shop;
 import com.google.common.annotations.VisibleForTesting;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.MemorySection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.IOException;
@@ -27,30 +30,44 @@ public class ShopDataConfigManager {
     }
 
     public Shop getShop(UUID uuid) {
-        return loadedShops.getOrDefault(uuid, loadShop(uuid));
+        Shop shop = loadedShops.computeIfAbsent(uuid, this::readShop);
+        Bukkit.broadcastMessage(loadedShops.keySet().toString());
+        return shop;
     }
 
-    public Shop loadShop(UUID uuid) {
+    public void addShop(Shop shop) {
+        loadedShops.put(shop.getUuid(), shop);
+        saveShop(shop);
+    }
+
+    public Shop readShop(UUID uuid) {
         Path path = getShopDataPath(uuid);
 
         if (path.toFile().exists()) {
-            YamlConfiguration config = YamlConfiguration.loadConfiguration(path.toFile());
-            Shop shop = (Shop) config.get(""); //TODO not sure if this can work. Maybe getRoot?
-            loadedShops.put(uuid, shop);
-            return shop;
+            FileConfiguration config = YamlConfiguration.loadConfiguration(path.toFile());
+            return (Shop) config.get("shop");
         }
         return null;
     }
 
-    public void saveShop(Shop shop) throws IOException {
+    public void saveShop(Shop shop) {
         Path path = getShopDataPath(shop.getUuid());
 
         // Recreate directories if missing
         path.toFile().getParentFile().mkdirs();
 
-        YamlConfiguration config = new YamlConfiguration();
-        config.set("", shop.serialize());
-        config.save(path.toFile());
+        FileConfiguration config = new YamlConfiguration();
+        config.set("shop", shop);
+        try {
+            config.save(path.toFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveShopsAndClear() {
+        loadedShops.values().forEach(this::saveShop);
+        loadedShops.clear();
     }
 
 

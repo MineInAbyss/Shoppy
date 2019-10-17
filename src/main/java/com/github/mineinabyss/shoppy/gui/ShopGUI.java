@@ -3,25 +3,21 @@ package com.github.mineinabyss.shoppy.gui;
 import com.derongan.minecraft.guiy.gui.*;
 import com.github.mineinabyss.shoppy.Shoppy;
 import com.github.mineinabyss.shoppy.shops.Shop;
-import com.github.mineinabyss.shoppy.shops.Trade;
 import de.erethon.headlib.HeadLib;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateShopGUI extends GuiHolder {
+public class ShopGUI extends GuiHolder {
     private Player player;
-    private Shoppy plugin;
     private List<Layout> history = new ArrayList<>();
     private ClickableElement back;
+    private Shop shop;
 
-    public CreateShopGUI(Player player, Shoppy plugin) {
-        super(6, "Create Shop", plugin);
-        this.plugin = plugin;
+    public ShopGUI(Player player, Shop shop) {
+        super(6, "Shop", Shoppy.getInstance()); //TODO add shop.getName()
+        this.shop = shop;
         this.player = player;
 
         //create back button
@@ -54,21 +50,12 @@ public class CreateShopGUI extends GuiHolder {
 
     private Layout buildMain() {
         Layout layout = new Layout();
-
-
+//        shop.getTrades().forEach(trade -> trade);
         ClickableElement name = new ClickableElement(Cell.forItemStack(HeadLib.CHECKMARK.toItemStack(), "Create"));
-        name.setClickAction(clickEvent -> createShop());
+//        name.setClickAction(clickEvent -> createShop());
         layout.addElement(0, 0, name);
 
         addBackButton(layout);
         return layout;
-    }
-
-    private void createShop() {
-        Villager villager = (Villager) player.getLocation().getWorld().spawnEntity(player.getLocation(), EntityType.VILLAGER);
-        villager.addScoreboardTag("shoppy");
-        Shop shop = new Shop(villager.getUniqueId());
-//        shop.setTrades(new Trade());
-        Shoppy.getInstance().getContext().addShop(shop);
     }
 }

@@ -7,6 +7,10 @@ apply plugin: 'java'
 group = pluginGroup
 version = pluginVersion
 
+ext {
+    plugin_path = ''
+}
+
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
@@ -17,9 +21,12 @@ repositories {
         url = 'https://papermc.io/repo/repository/maven-public/'
     }
     maven {
-        name = 'sonatype'
-        url = 'https://oss.sonatype.org/content/groups/public/'
-    }
+        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+        content {
+            includeGroup 'org.bukkit'
+            includeGroup 'org.spigotmc'
+        }
+    } //Spigot
     maven { url 'https://erethon.de/repo/' } //HeadLib
     maven { url 'https://jitpack.io' } //JitPack
 }
@@ -32,8 +39,8 @@ dependencies {
 }
 
 shadowJar {
-    baseName = "Mobzy"
-    classifier = null
+    getArchiveBaseName().set("Shoppy")
+    getArchiveClassifier().set(null)
     dependencies {
         include(dependency('com.github.Mineinabyss:guiy:master-SNAPSHOT'))
         include(dependency('de.erethon:headlib:3.0.1'))
@@ -47,4 +54,13 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         filter ReplaceTokens, tokens: [version: version]
     }
+}
+
+//Move into plugins folder
+if (plugin_path != '') {
+    task copyJar(type: Copy) {
+        from shadowJar // here it automatically reads jar file produced from jar task
+        into plugin_path
+    }
+    build.dependsOn copyJar
 }
