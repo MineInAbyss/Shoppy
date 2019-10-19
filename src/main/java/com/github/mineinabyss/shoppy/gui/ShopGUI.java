@@ -3,6 +3,7 @@ package com.github.mineinabyss.shoppy.gui;
 import com.derongan.minecraft.guiy.gui.*;
 import com.github.mineinabyss.shoppy.Shoppy;
 import com.github.mineinabyss.shoppy.shops.Shop;
+import com.github.mineinabyss.shoppy.shops.Trade;
 import de.erethon.headlib.HeadLib;
 import org.bukkit.entity.Player;
 
@@ -50,12 +51,25 @@ public class ShopGUI extends GuiHolder {
 
     private Layout buildMain() {
         Layout layout = new Layout();
-//        shop.getTrades().forEach(trade -> trade);
-        ClickableElement name = new ClickableElement(Cell.forItemStack(HeadLib.CHECKMARK.toItemStack(), "Create"));
-//        name.setClickAction(clickEvent -> createShop());
-        layout.addElement(0, 0, name);
+        ScrollingPallet pallet = new ScrollingPallet(9);
+
+        shop.getTrades().forEach(trade -> {
+            ClickableElement tradeButton = new ClickableElement(Cell.forItemStack(trade.getDisplayItem()));
+            tradeButton.setClickAction(clickEvent -> setElement(buildTradeMenu(trade)));
+            pallet.addTool(tradeButton);
+        });
+
+        layout.addElement(0, 0, pallet);
+
+//        ClickableElement name = new ClickableElement(Cell.forItemStack(HeadLib.CHECKMARK.toItemStack(), "Create"));
+//        layout.addElement(0, 5, name);
 
         addBackButton(layout);
+        return layout;
+    }
+
+    private Layout buildTradeMenu(Trade trade) {
+        Layout layout = new Layout();
         return layout;
     }
 }

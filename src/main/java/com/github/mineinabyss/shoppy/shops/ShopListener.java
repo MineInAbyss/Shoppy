@@ -1,7 +1,6 @@
 package com.github.mineinabyss.shoppy.shops;
 
 import com.github.mineinabyss.shoppy.ShoppyContext;
-import com.github.mineinabyss.shoppy.gui.ShopGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;

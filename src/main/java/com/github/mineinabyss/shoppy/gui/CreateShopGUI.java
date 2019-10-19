@@ -4,11 +4,14 @@ import com.derongan.minecraft.guiy.gui.*;
 import com.github.mineinabyss.shoppy.Shoppy;
 import com.github.mineinabyss.shoppy.shops.Shop;
 import com.github.mineinabyss.shoppy.shops.Trade;
+import com.github.mineinabyss.shoppy.shops.rewards.RewardItem;
+import com.github.mineinabyss.shoppy.shops.wants.WantItem;
 import de.erethon.headlib.HeadLib;
-import org.bukkit.entity.Entity;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +58,6 @@ public class CreateShopGUI extends GuiHolder {
     private Layout buildMain() {
         Layout layout = new Layout();
 
-
         ClickableElement name = new ClickableElement(Cell.forItemStack(HeadLib.CHECKMARK.toItemStack(), "Create"));
         name.setClickAction(clickEvent -> createShop());
         layout.addElement(0, 0, name);
@@ -68,7 +70,7 @@ public class CreateShopGUI extends GuiHolder {
         Villager villager = (Villager) player.getLocation().getWorld().spawnEntity(player.getLocation(), EntityType.VILLAGER);
         villager.addScoreboardTag("shoppy");
         Shop shop = new Shop(villager.getUniqueId());
-//        shop.setTrades(new Trade());
+        shop.addTrade(new Trade(new ItemStack(Material.DIAMOND_SWORD), new WantItem(new ItemStack(Material.STONE, 10)), new RewardItem(new ItemStack(Material.DIRT, 10))));
         Shoppy.getInstance().getContext().addShop(shop);
     }
 }

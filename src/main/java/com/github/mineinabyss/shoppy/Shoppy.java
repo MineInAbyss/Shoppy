@@ -6,6 +6,10 @@ import com.github.mineinabyss.shoppy.configuration.ShopDataConfigManager;
 import com.github.mineinabyss.shoppy.shops.Shop;
 import com.github.mineinabyss.shoppy.shops.ShopListener;
 import com.github.mineinabyss.shoppy.shops.Trade;
+import com.github.mineinabyss.shoppy.shops.rewards.Reward;
+import com.github.mineinabyss.shoppy.shops.rewards.RewardItem;
+import com.github.mineinabyss.shoppy.shops.wants.Want;
+import com.github.mineinabyss.shoppy.shops.wants.WantItem;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.Plugin;
@@ -26,10 +30,11 @@ public final class Shoppy extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
+        // Plugin startup logic
         ConfigurationSerialization.registerClass(Shop.class, "ShoppyShop");
         ConfigurationSerialization.registerClass(Trade.class, "ShoppyTrade");
-        // Plugin startup logic
+        ConfigurationSerialization.registerClass(WantItem.class, "ShoppyWantItem");
+        ConfigurationSerialization.registerClass(RewardItem.class, "ShoppyRewardItem");
         //register context
         context = new ShoppyContext(getConfig());
         context.setPlugin(this);

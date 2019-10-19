@@ -47,7 +47,7 @@ public class GUICommandExecutor implements CommandExecutor, TabCompleter {
             return Collections.emptyList();
 
         if (args.length <= 1)
-            return Stream.of("create")
+            return Stream.of("create", "edit")
                     .filter(a -> a.startsWith(args[0]))
                     .collect(toList());
         return Collections.emptyList();

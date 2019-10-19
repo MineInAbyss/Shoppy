@@ -19,7 +19,6 @@ public class Shop implements ConfigurationSerializable {
     }
 
     public static Shop deserialize(Map<String, Object> args) {
-        Bukkit.broadcastMessage("deserialize");
         Shop shop = new Shop(UUID.fromString((String) args.get(ShopDataConfigManager.UUID_KEY)));
         shop.setTrades((List<Trade>) args.get("trades"));
         return shop;
@@ -43,6 +42,10 @@ public class Shop implements ConfigurationSerializable {
 
     public void setTrades(List<Trade> trades) {
         this.trades = trades;
+    }
+
+    public void addTrade(Trade trade){
+        trades.add(trade);
     }
 
     @Override
