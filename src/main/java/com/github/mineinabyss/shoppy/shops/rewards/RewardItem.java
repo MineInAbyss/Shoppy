@@ -6,10 +6,12 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @SerializableAs("ShoppyRewardItem")
 public class RewardItem implements Reward {
     private ItemStack item;
+    private String displayName;
 
     public RewardItem() {
     }
@@ -34,6 +36,24 @@ public class RewardItem implements Reward {
 
     public boolean reward(Player player) {
         return player.getInventory().addItem(item).isEmpty();
+    }
+
+    @Override
+    public ItemStack getDisplayItem() {
+        return item;
+    }
+
+    //TODO somehow combine with rewarditem
+    @Override
+    public String getDisplayName() {
+        if(displayName == null){
+            int amount = item.getAmount();
+            String name = item.getType().name();
+            if(amount > 1)
+                name += " x" + amount;
+            return name;
+        }
+        return displayName;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.github.mineinabyss.shoppy.shops.wants;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -18,7 +19,7 @@ public class WantItem implements Want {
 
     public WantItem(ItemStack wantedItem) {
         this.wantedItem = wantedItem;
-        displayItem = wantedItem;
+        displayItem = wantedItem.clone();
     }
 
     public static WantItem deserialize(Map<String, Object> args) {
@@ -39,10 +40,10 @@ public class WantItem implements Want {
 
     @Override
     public String getDisplayName() {
-        if(displayName == null){
+        if (displayName == null) {
             int amount = displayItem.getAmount();
-            String name = displayItem.getItemMeta().getDisplayName();
-            if(amount > 1)
+            String name = displayItem.getType().name();
+            if (amount > 1)
                 name += " x" + amount;
             return name;
         }
@@ -64,7 +65,8 @@ public class WantItem implements Want {
 
     @Override
     public boolean conditionMet(Player player) {
-        return player.getInventory().contains(wantedItem);
+        Bukkit.broadcastMessage(wantedItem.toString());
+        return player.getInventory().containsAtLeast(wantedItem, wantedItem.getAmount());
     }
 
     @Override

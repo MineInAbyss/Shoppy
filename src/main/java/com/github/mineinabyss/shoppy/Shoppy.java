@@ -56,6 +56,7 @@ public final class Shoppy extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        //TODO make editing files directly work better (perhaps a reload command of our own would be enough)
         getContext().getShopData().saveShopsAndClear();
     }
 }

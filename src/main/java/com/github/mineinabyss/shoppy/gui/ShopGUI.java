@@ -5,6 +5,7 @@ import com.github.mineinabyss.shoppy.Shoppy;
 import com.github.mineinabyss.shoppy.shops.Shop;
 import com.github.mineinabyss.shoppy.shops.Trade;
 import de.erethon.headlib.HeadLib;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -70,6 +71,22 @@ public class ShopGUI extends GuiHolder {
 
     private Layout buildTradeMenu(Trade trade) {
         Layout layout = new Layout();
+        FillableElement wants = new FillableElement(5, 2);
+        trade.getWants().forEach(want -> {
+            wants.addElement(Cell.forItemStack(want.getDisplayItem(), want.getDisplayName()));
+            wants.addElement(getUsable(want.conditionMet(player)));
+        });
+        layout.addElement(0, 1, wants);
+
+        FillableElement rewards = new FillableElement(5, 1);
+        trade.getRewards().forEach(reward -> rewards.addElement(Cell.forItemStack(reward.getDisplayItem(), reward.getDisplayName())));
+        layout.addElement(8, 1, rewards);
         return layout;
+    }
+
+    private Element getUsable(boolean bool){
+        if(bool)
+            return Cell.forMaterial(Material.EMERALD, "\u2714");
+        return Cell.forMaterial(Material.BARRIER, "X");
     }
 }
