@@ -65,9 +65,13 @@ public class Trade implements ConfigurationSerializable {
         return wants.stream().anyMatch(want -> want.conditionMet(player));
     }
 
-    public void trade(Player player) {
-        if (conditionsMet(player))
+    public boolean trade(Player player) {
+        if (conditionsMet(player)) {
+            wants.forEach(want -> want.fulfillWant(player));
             rewards.forEach(reward -> reward.reward(player));
+            return true;
+        }
+        return false;
     }
 
     @Override

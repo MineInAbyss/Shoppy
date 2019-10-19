@@ -11,4 +11,6 @@ public interface Want extends ConfigurationSerializable {
     ItemStack getDisplayItem();
 
     boolean conditionMet(Player player);
+
+    void fulfillWant(Player player);
 }

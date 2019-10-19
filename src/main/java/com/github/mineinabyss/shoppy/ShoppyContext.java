@@ -49,13 +49,4 @@ public class ShoppyContext {
     public Configuration getConfig() {
         return config;
     }
-
-    public void addShop(Shop shop){
-        shopData.addShop(shop);
-    }
-
-    public Shop getShop(UUID uuid){
-        return shopData.getShop(uuid);
-    }
-
 }

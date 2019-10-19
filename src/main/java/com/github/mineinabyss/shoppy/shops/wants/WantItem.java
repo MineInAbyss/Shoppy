@@ -70,6 +70,11 @@ public class WantItem implements Want {
     }
 
     @Override
+    public void fulfillWant(Player player) {
+        player.getInventory().removeItem(wantedItem);
+    }
+
+    @Override
     public Map<String, Object> serialize() {
         Map<String, Object> args = new HashMap<>();
         args.put("==", "ShoppyWantItem");

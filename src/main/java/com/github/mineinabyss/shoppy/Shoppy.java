@@ -6,9 +6,7 @@ import com.github.mineinabyss.shoppy.configuration.ShopDataConfigManager;
 import com.github.mineinabyss.shoppy.shops.Shop;
 import com.github.mineinabyss.shoppy.shops.ShopListener;
 import com.github.mineinabyss.shoppy.shops.Trade;
-import com.github.mineinabyss.shoppy.shops.rewards.Reward;
 import com.github.mineinabyss.shoppy.shops.rewards.RewardItem;
-import com.github.mineinabyss.shoppy.shops.wants.Want;
 import com.github.mineinabyss.shoppy.shops.wants.WantItem;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -17,15 +15,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Shoppy extends JavaPlugin {
     private ShoppyContext context;
-
-
-    public ShoppyContext getContext() {
-        return context;
-    }
+    private ShoppyAPI shoppyAPI;
 
     public static Shoppy getInstance() {
         Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("Shoppy");
         return (Shoppy) plugin;
+    }
+
+    public ShoppyContext getContext() {
+        return context;
     }
 
     @Override
@@ -42,6 +40,7 @@ public final class Shoppy extends JavaPlugin {
 
         //create config managers
         context.setShopData(new ShopDataConfigManager(context));
+        shoppyAPI = new ShoppyAPI(context);
 
         //register events
         getServer().getPluginManager().registerEvents(new GuiListener(this), this);
@@ -58,5 +57,9 @@ public final class Shoppy extends JavaPlugin {
         // Plugin shutdown logic
         //TODO make editing files directly work better (perhaps a reload command of our own would be enough)
         getContext().getShopData().saveShopsAndClear();
+    }
+
+    public ShoppyAPI getAPI() {
+        return shoppyAPI;
     }
 }

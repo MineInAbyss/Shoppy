@@ -2,12 +2,14 @@ package com.github.mineinabyss.shoppy.gui;
 
 import com.derongan.minecraft.guiy.gui.*;
 import com.github.mineinabyss.shoppy.Shoppy;
+import com.github.mineinabyss.shoppy.ShoppyAPI;
 import com.github.mineinabyss.shoppy.shops.Shop;
 import com.github.mineinabyss.shoppy.shops.Trade;
 import com.github.mineinabyss.shoppy.shops.rewards.RewardItem;
 import com.github.mineinabyss.shoppy.shops.wants.WantItem;
 import de.erethon.headlib.HeadLib;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -69,8 +71,10 @@ public class CreateShopGUI extends GuiHolder {
     private void createShop() {
         Villager villager = (Villager) player.getLocation().getWorld().spawnEntity(player.getLocation(), EntityType.VILLAGER);
         villager.addScoreboardTag("shoppy");
+        villager.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
+        villager.setInvulnerable(true);
         Shop shop = new Shop(villager.getUniqueId());
         shop.addTrade(new Trade(new ItemStack(Material.DIAMOND_SWORD), new WantItem(new ItemStack(Material.STONE, 10)), new RewardItem(new ItemStack(Material.DIRT, 10))));
-        Shoppy.getInstance().getContext().addShop(shop);
+        ShoppyAPI.getInstance().addShop(shop);
     }
 }

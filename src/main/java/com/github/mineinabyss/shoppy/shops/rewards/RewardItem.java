@@ -40,16 +40,18 @@ public class RewardItem implements Reward {
 
     @Override
     public ItemStack getDisplayItem() {
-        return item;
+        ItemStack displayItem = item.clone();
+        displayItem.getItemMeta().setDisplayName();
+        return displayItem;
     }
 
     //TODO somehow combine with rewarditem
     @Override
     public String getDisplayName() {
-        if(displayName == null){
+        if (displayName == null) {
             int amount = item.getAmount();
             String name = item.getType().name();
-            if(amount > 1)
+            if (amount > 1)
                 name += " x" + amount;
             return name;
         }
