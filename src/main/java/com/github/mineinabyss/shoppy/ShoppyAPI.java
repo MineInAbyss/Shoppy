@@ -4,6 +4,7 @@ import com.github.mineinabyss.shoppy.configuration.ShopDataConfigManager;
 import com.github.mineinabyss.shoppy.shops.Shop;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginBase;
 
@@ -31,6 +32,4 @@ public class ShoppyAPI {
     public Shop getShop(UUID uuid){
         return context.getShopData().getShop(uuid);
     }
-
-    public
 }

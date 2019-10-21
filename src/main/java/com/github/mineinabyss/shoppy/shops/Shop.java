@@ -1,8 +1,9 @@
 package com.github.mineinabyss.shoppy.shops;
 
+import com.github.mineinabyss.shoppy.Shoppy;
+import com.github.mineinabyss.shoppy.ShoppyAPI;
 import com.github.mineinabyss.shoppy.configuration.ShopDataConfigManager;
-import com.github.mineinabyss.shoppy.gui.ShopGUI;
-import org.bukkit.Bukkit;
+import com.github.mineinabyss.shoppy.gui.shop.ShopGUI;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
@@ -46,6 +47,15 @@ public class Shop implements ConfigurationSerializable {
 
     public void addTrade(Trade trade){
         trades.add(trade);
+    }
+
+    public void save(){
+        Shoppy.getInstance().getContext().getShopData().saveShop(this);
+    }
+
+    public Shop register(){
+        ShoppyAPI.getInstance().addShop(this);
+        return this;
     }
 
     @Override

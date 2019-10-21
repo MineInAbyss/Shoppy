@@ -2,7 +2,7 @@ package com.github.mineinabyss.shoppy.commands;
 
 import com.github.mineinabyss.shoppy.Shoppy;
 import com.github.mineinabyss.shoppy.ShoppyContext;
-import com.github.mineinabyss.shoppy.gui.CreateShopGUI;
+import com.github.mineinabyss.shoppy.gui.MainGUI;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 public class GUICommandExecutor implements CommandExecutor, TabCompleter {
+    public static final String noPermission = ChatColor.RED + "You don't have permission to do this";
     private ShoppyContext context;
 
     public GUICommandExecutor(ShoppyContext context) {
@@ -30,10 +31,17 @@ public class GUICommandExecutor implements CommandExecutor, TabCompleter {
             Player player = (Player) commandSender;
 
             if (label.equals("shoppy")) {
+                if(!player.hasPermission("shoppy.gui")){
+                    player.sendMessage(noPermission);
+                    return true;
+                }
+                MainGUI gui = new MainGUI(player, JavaPlugin.getPlugin(Shoppy.class));
                 if (args.length == 0)
-                    player.sendMessage(ChatColor.RED + "Please enter an argument");
+                    gui.show(player);
                 else if (args[0].equalsIgnoreCase("create"))
-                    new CreateShopGUI(player, JavaPlugin.getPlugin(Shoppy.class)).show(player);
+                    gui.createShop();
+                else if (args[0].equalsIgnoreCase("edit"))
+                    gui.editGUI();
                 return true;
             }
         }

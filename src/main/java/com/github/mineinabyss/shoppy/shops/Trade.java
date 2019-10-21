@@ -1,7 +1,5 @@
 package com.github.mineinabyss.shoppy.shops;
 
-import com.github.mineinabyss.shoppy.shops.rewards.Reward;
-import com.github.mineinabyss.shoppy.shops.wants.Want;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
