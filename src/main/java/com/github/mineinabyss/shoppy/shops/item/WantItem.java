@@ -1,9 +1,7 @@
 package com.github.mineinabyss.shoppy.shops.item;
 
-import com.derongan.minecraft.guiy.gui.Layout;
-import com.github.mineinabyss.shoppy.gui.editor.EditGUI;
-import com.github.mineinabyss.shoppy.gui.editor.ItemEditorLayout;
 import com.github.mineinabyss.shoppy.shops.Want;
+import org.bukkit.Material;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -38,5 +36,9 @@ public class WantItem extends ItemShop implements Want {
     @Override
     public void fulfillWant(Player player) {
         player.getInventory().removeItem(item);
+    }
+
+    public static Want defaultWant() {
+        return new WantItem(new ItemStack(Material.STONE));
     }
 }

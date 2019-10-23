@@ -49,7 +49,11 @@ public final class Shoppy extends JavaPlugin {
         //register command executors
         GUICommandExecutor guiCommandExecutor = new GUICommandExecutor(context);
 
-        this.getCommand("shoppy").setExecutor(guiCommandExecutor);
+        getCommand("shoppy").setExecutor(guiCommandExecutor);
+
+        //registering shoppy types
+        shoppyAPI.registerWant(WantItem.class);
+        shoppyAPI.registerReward(RewardItem.class);
     }
 
     @Override

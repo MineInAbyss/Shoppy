@@ -1,15 +1,11 @@
 package com.github.mineinabyss.shoppy;
 
-import com.github.mineinabyss.shoppy.configuration.ShopDataConfigManager;
+import com.github.mineinabyss.shoppy.shops.Reward;
 import com.github.mineinabyss.shoppy.shops.Shop;
+import com.github.mineinabyss.shoppy.shops.Want;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.Configuration;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginBase;
 
 import java.util.UUID;
-import java.util.logging.Logger;
 
 /**
  * Stores context for the plugin, such as the plugin instance
@@ -17,7 +13,7 @@ import java.util.logging.Logger;
 public class ShoppyAPI {
     private ShoppyContext context;
 
-    public static ShoppyAPI getInstance(){
+    public static ShoppyAPI getInstance() {
         return ((Shoppy) Bukkit.getServer().getPluginManager().getPlugin("Shoppy")).getAPI();
     }
 
@@ -25,11 +21,19 @@ public class ShoppyAPI {
         this.context = context;
     }
 
-    public void addShop(Shop shop){
+    public void addShop(Shop shop) {
         context.getShopData().addShop(shop);
     }
 
-    public Shop getShop(UUID uuid){
+    public Shop getShop(UUID uuid) {
         return context.getShopData().getShop(uuid);
+    }
+
+    public void registerWant(Class<? extends Want> clazz) {
+        context.registerWant(clazz);
+    }
+
+    public void registerReward(Class<? extends Reward> clazz) {
+        context.registerReward(clazz);
     }
 }

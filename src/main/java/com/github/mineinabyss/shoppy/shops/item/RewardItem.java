@@ -1,10 +1,7 @@
 package com.github.mineinabyss.shoppy.shops.item;
 
-import com.derongan.minecraft.guiy.gui.Layout;
-import com.github.mineinabyss.shoppy.gui.editor.EditGUI;
-import com.github.mineinabyss.shoppy.gui.editor.EditTradeGUI;
-import com.github.mineinabyss.shoppy.gui.editor.ItemEditorLayout;
 import com.github.mineinabyss.shoppy.shops.Reward;
+import org.bukkit.Material;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -34,5 +31,9 @@ public class RewardItem extends ItemShop implements Reward {
 
     public boolean reward(Player player) {
         return player.getInventory().addItem(item.clone()).isEmpty();
+    }
+
+    public static Reward defaultReward(){
+        return new RewardItem(new ItemStack(Material.STONE));
     }
 }

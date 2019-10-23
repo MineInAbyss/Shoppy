@@ -51,6 +51,13 @@ public class Trade implements ConfigurationSerializable {
         this.wants = wants;
     }
 
+    public void remove(ShoppyType matter){
+        if(matter instanceof Want)
+            wants.remove(matter);
+        else if(matter instanceof Reward)
+            rewards.remove(matter);
+    }
+
     public List<Reward> getRewards() {
         return rewards;
     }

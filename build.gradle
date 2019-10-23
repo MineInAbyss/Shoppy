@@ -32,10 +32,12 @@ repositories {
 }
 
 dependencies {
+    compile "com.google.auto.value:auto-value-annotations:1.7"
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compileOnly 'de.erethon:headlib:3.0.1'
     compileOnly 'org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT'
     implementation 'com.github.Mineinabyss:guiy:master-SNAPSHOT'
+    annotationProcessor "com.google.auto.value:auto-value:1.7"
 }
 
 shadowJar {

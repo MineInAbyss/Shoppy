@@ -4,15 +4,8 @@ import com.derongan.minecraft.guiy.gui.*;
 import com.github.mineinabyss.shoppy.Shoppy;
 import com.github.mineinabyss.shoppy.gui.HistoryGuiHolder;
 import com.github.mineinabyss.shoppy.shops.Shop;
-import com.github.mineinabyss.shoppy.shops.Trade;
-import com.github.mineinabyss.shoppy.shops.ShoppyMatter;
-import com.github.mineinabyss.shoppy.shops.Want;
-import de.erethon.headlib.HeadLib;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class EditGUI extends HistoryGuiHolder {
     private Shop shop;

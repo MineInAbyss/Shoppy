@@ -22,6 +22,10 @@ public class HistoryLayout extends Layout {
         addElement(8, 5, holder.getBackButton());
     }
 
+    public void addBackButton(Layout otherLayout) {
+        holder.addBackButton(otherLayout);
+    }
+
 
     public void backInHistory() {
         holder.backInHistory();
