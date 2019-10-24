@@ -3,18 +3,15 @@ package com.github.mineinabyss.shoppy.gui.editor;
 import com.derongan.minecraft.guiy.gui.Cell;
 import com.derongan.minecraft.guiy.gui.ClickableElement;
 import com.derongan.minecraft.guiy.gui.ContainerElement;
-import com.github.mineinabyss.shoppy.gui.HistoryGuiHolder;
-import com.github.mineinabyss.shoppy.gui.HistoryLayout;
-import com.github.mineinabyss.shoppy.gui.shop.ShopGUI;
 import com.github.mineinabyss.shoppy.shops.item.ItemShop;
 import de.erethon.headlib.HeadLib;
 
-public class ItemEditorLayout extends HistoryLayout {
+public class ItemEditorLayout extends EditorLayout {
     private ItemShop itemElement;
     private ContainerElement container;
 
     public ItemEditorLayout(ItemShop itemElement, EditTradeGUI editTradeGUI) {
-        super(editTradeGUI.getHolder());
+        super(editTradeGUI);
         this.itemElement = itemElement;
 
         //container for swapping out items
@@ -27,7 +24,7 @@ public class ItemEditorLayout extends HistoryLayout {
         save.setClickAction(clickEvent -> {
             itemElement.setItem(((Cell) container.getElement(0, 0)).itemStack);
             editTradeGUI.update();
-            backInHistory();
+            addAndGoBack(itemElement);
         });
         addElement(0, 5, save);
         addBackButton();

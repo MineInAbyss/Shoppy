@@ -6,14 +6,11 @@ import com.derongan.minecraft.guiy.gui.Element;
 import com.derongan.minecraft.guiy.gui.Layout;
 import com.github.mineinabyss.shoppy.gui.editor.EditTradeGUI;
 import com.github.mineinabyss.shoppy.gui.editor.ItemEditorLayout;
-import com.github.mineinabyss.shoppy.shops.Reward;
 import com.github.mineinabyss.shoppy.shops.ShoppyType;
-import com.github.mineinabyss.shoppy.shops.Want;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.configuration.serialization.SerializableAs;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public abstract class ItemShop implements ShoppyType {
     protected ItemStack item;
@@ -56,10 +53,13 @@ public abstract class ItemShop implements ShoppyType {
         return Cell.forItemStack(getDisplayItem(), getDisplayName());
     }
 
-    //TODO make item look fancy
     @Override
     public ItemStack getEditGUIAddItem() {
-        return new ItemStack(Material.STONE);
+        ItemStack itemStack = new ItemStack(Material.STONE);
+        ItemMeta meta = itemStack.getItemMeta();
+        meta.setDisplayName(ChatColor.RESET + "Item");
+        itemStack.setItemMeta(meta);
+        return itemStack;
     }
 
     @Override

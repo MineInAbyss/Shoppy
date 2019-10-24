@@ -1,9 +1,6 @@
 package com.github.mineinabyss.shoppy.gui.editor;
 
-import com.derongan.minecraft.guiy.gui.Cell;
-import com.derongan.minecraft.guiy.gui.ClickableElement;
-import com.derongan.minecraft.guiy.gui.FillableElement;
-import com.derongan.minecraft.guiy.gui.Layout;
+import com.derongan.minecraft.guiy.gui.*;
 import com.github.mineinabyss.shoppy.Shoppy;
 import com.github.mineinabyss.shoppy.ShoppyContext;
 import com.github.mineinabyss.shoppy.gui.HistoryLayout;
@@ -20,6 +17,11 @@ public class EditTradeGUI extends HistoryLayout {
     FillableElement wants = new FillableElement(5, 2);
     FillableElement rewards = new FillableElement(5, 2);
     private Shop shop;
+
+    public Trade getTrade() {
+        return trade;
+    }
+
     private Trade trade;
     private FillableElement types = new FillableElement(5, 9);
     private Map<ClickableElement, ShoppyType> removeMap = new HashMap<>();
@@ -33,15 +35,31 @@ public class EditTradeGUI extends HistoryLayout {
 
         update();
 
+        //container for icon
+        ContainerElement icon = new ContainerElement(1, 1, null, null);
+        icon.addElement(Cell.forItemStack(trade.getDisplayItem()));
+        addElement(6, 5, icon);
+
         //save button
         ClickableElement save = new ClickableElement(Cell.forItemStack(HeadLib.CHECKMARK.toItemStack(), "Save to file"));
         save.setClickAction(clickEvent -> {
             shop.save();
+            trade.setDisplayItem(((Cell) icon.getElement(0, 0)).itemStack);
+            backInHistory();
+            holder.update();
+        });
+        addElement(0, 5, save);
+
+        //delete button
+        ClickableElement delete = new ClickableElement(Cell.forItemStack(HeadLib.PLAIN_RED.toItemStack(), "Delete trade"));
+        delete.setClickAction(clickEvent -> {
+            shop.getTrades().remove(trade);
+            holder.update();
             backInHistory();
         });
+        addElement(7, 5, delete);
 
         addBackButton();
-        addElement(0, 5, save);
     }
 
     private void createMatter(List<? extends ShoppyType> matters, FillableElement fillable, boolean isWant) {
@@ -71,12 +89,14 @@ public class EditTradeGUI extends HistoryLayout {
      * @return a layout with a list of wants or rewards
      */
     public Layout buildAddMatterLayout(boolean isWant) {
+        types.clear();
         Layout layout = new Layout();
+        //TODO repeat less code
         if (isWant)
             context.getWants().forEach(want -> {
                 ClickableElement addType = new ClickableElement(Cell.forItemStack(want.getEditGUIAddItem()));
                 addType.setClickAction(clickEvent -> {
-                    trade.getWants().add(want);
+                    backInHistory();
                     holder.setElement(want.buildEditLayout(this));
                 });
                 types.addElement(addType);
@@ -85,7 +105,7 @@ public class EditTradeGUI extends HistoryLayout {
             context.getRewards().forEach(reward -> {
                 ClickableElement addType = new ClickableElement(Cell.forItemStack(reward.getEditGUIAddItem()));
                 addType.setClickAction(clickEvent -> {
-                    trade.getRewards().add(reward);
+                    backInHistory();
                     holder.setElement(reward.buildEditLayout(this));
                 });
                 types.addElement(addType);
@@ -101,7 +121,7 @@ public class EditTradeGUI extends HistoryLayout {
         //wants
         wants.clear();
         createMatter(trade.getWants(), wants, true);
-        addElement(0, 1, wants);
+        addElement(1, 1, wants);
 
         //rewards
         rewards.clear();

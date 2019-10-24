@@ -88,7 +88,6 @@ public class MainGUI extends GuiHolder {
             villager.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
             villager.setInvulnerable(true);
             Shop shop = new Shop(villager.getUniqueId()).register();
-            shop.addTrade(new Trade(new ItemStack(Material.DIAMOND_SWORD), new WantItem(new ItemStack(Material.STONE, 10)), new RewardItem(new ItemStack(Material.DIRT, 10))));
             player.sendMessage(ChatColor.GREEN + "Created shop!");
         } else
             player.sendMessage(GUICommandExecutor.noPermission);

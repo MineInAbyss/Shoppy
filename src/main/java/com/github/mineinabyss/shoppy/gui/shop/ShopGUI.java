@@ -21,6 +21,11 @@ public class ShopGUI extends HistoryGuiHolder {
         this.player = player;
 
         //create back button
+        back = new ClickableElement(Cell.forItemStack(HeadLib.RED_X.toItemStack("Back")));
+        back.setClickAction(clickEvent -> backInHistory());
+
+
+        //create back button
         Element cell = Cell.forItemStack(HeadLib.RED_X.toItemStack("Back"));
         back = new ClickableElement(cell);
         back.setClickAction(clickEvent -> backInHistory());
