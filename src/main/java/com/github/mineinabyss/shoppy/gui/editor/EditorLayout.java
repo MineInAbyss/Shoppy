@@ -16,9 +16,9 @@ public class EditorLayout extends HistoryLayout {
 
     protected void addToTrade(ShoppyType element) {
         Trade trade = editTradeGUI.getTrade();
-        if (element instanceof Want)
+        if (element instanceof Want && !trade.getWants().contains(element))
             trade.getWants().add(((Want) element));
-        else if (element instanceof Reward)
+        else if (element instanceof Reward && !trade.getRewards().contains(element))
             trade.getRewards().add(((Reward) element));
     }
 

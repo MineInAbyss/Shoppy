@@ -19,7 +19,7 @@ public class EditGUI extends HistoryGuiHolder {
     ScrollingPallet pallet = new ScrollingPallet(9);
 
     public EditGUI(Player player, Shop shop) {
-        super(6, ChatColor.GREEN + "Shop Editor", Shoppy.getInstance());
+        super(6, ChatColor.DARK_PURPLE + "Shop Editor", Shoppy.getInstance());
         this.player = player;
         this.shop = shop;
 
